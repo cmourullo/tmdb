@@ -15,11 +15,13 @@
                             <th>Movie</th>
                             <th>Details</th>
                         </tr>
-                        <tr>
-                            <td>movie gender</td>
-                            <td>movie name</td>
-                            <td>movie details</td>
-                        </tr>
+                        @foreach ($genres as $genre)
+                            <tr>
+                                <td>{{ $genre->name }}</td>
+                                <td>movie name</td>
+                                <td>movie details</td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>
