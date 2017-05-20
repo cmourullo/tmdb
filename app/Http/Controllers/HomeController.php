@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $apiKey = 'aa9d57434437a8d7d1823229c122fb00';
+
+        $client = new Client([
+            'base_uri' => 'https://api.themoviedb.org/3/',
+        ]);
+        $response = $client->request('GET', 'genre/movie/list'."?api_key=$apiKey");
+
+        $data = json_decode($response->getBody());
+        $genres = $data->genres;
+
+        return view('home', compact('genres'));
     }
 }
