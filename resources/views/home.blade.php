@@ -8,7 +8,19 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    The movie database
+                    <table class="table">
+                        <tr>
+                            <th>Gender</th>
+                            <th>Movie</th>
+                            <th>Details</th>
+                        </tr>
+                        <tr>
+                            <td>movie gender</td>
+                            <td>movie name</td>
+                            <td>movie details</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
