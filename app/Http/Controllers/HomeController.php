@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $apiKey = 'aa9d57434437a8d7d1823229c122fb00';
+        $apiKey = env('TMDB_API_KEY');
 
         $client = new Client([
             'base_uri' => 'https://api.themoviedb.org/3/',
