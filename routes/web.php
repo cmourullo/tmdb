@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'TmdbController@index')->name('home');
+Route::get('/movies_genre', 'TmdbController@moviesGenre');
+Route::get('/movie_details', 'TmdbController@movieDetails');
