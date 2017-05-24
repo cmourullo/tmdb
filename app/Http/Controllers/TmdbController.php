@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
+use App\Media\Tmdb;
 
 class TmdbController extends Controller
 {
     /**
-     * @var string
+     * @var Tmdb
      */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $baseUri;
+    private $tmdb;
 
     /**
      * TmdbController constructor.
      */
     public function __construct()
     {
-        $this->apiKey = env('TMDB_API_KEY');
-        $this->baseUri = 'https://api.themoviedb.org/3/';
+        /** @var Tmdb tmdb */
+        $this->tmdb = resolve('App\Media\Tmdb');
     }
 
     /**
@@ -32,10 +27,7 @@ class TmdbController extends Controller
      */
     public function index()
     {
-        $uri = "genre/movie/list?api_key=$this->apiKey";
-
-        $data = $this->sendGetRequest($uri);
-        $genres = $data->genres;
+        $genres = $this->tmdb->getMovieGenres();
 
         return view('home', compact('genres'));
     }
@@ -44,13 +36,10 @@ class TmdbController extends Controller
      * @return string
      */
     public function moviesGenre() {
+        //TODO: get elements in other way
         $params = $_REQUEST;
-        $movieGenreId = $params['id'];
 
-        $uri = "genre/$movieGenreId/movies?api_key=$this->apiKey";
-
-        $data = $this->sendGetRequest($uri);
-        $movies = $data->results;
+        $movies = $this->tmdb->getMoviesByGenre($params['id']);
 
         return json_encode($movies);
     }
@@ -62,25 +51,8 @@ class TmdbController extends Controller
         $params = $_REQUEST;
         $movieId = $params['id'];
 
-        $uri = "movie/$movieId?api_key=$this->apiKey";
+        $movieDetails = $this->tmdb->getMovieDetails($movieId);
 
-        $data = $this->sendGetRequest($uri);
-
-        return json_encode($data);
-    }
-
-    /**
-     * @param $uri
-     * @return mixed
-     */
-    public function sendGetRequest($uri)
-    {
-        $client = new Client([
-            'base_uri' => $this->baseUri,
-        ]);
-
-        $response = $client->request('GET', $uri);
-
-        return json_decode($response->getBody());
+        return json_encode($movieDetails);
     }
 }

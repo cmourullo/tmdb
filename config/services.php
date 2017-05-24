@@ -35,4 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'tmdb' => [
+        'key' => env('TMDB_API_KEY'),
+    ]
+
 ];
